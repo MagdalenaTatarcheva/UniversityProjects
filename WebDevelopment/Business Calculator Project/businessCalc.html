@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бизнес Калкулатор</title>
+    <style>
+    body {
+    background-image: url('https://static.vecteezy.com/system/resources/previews/006/891/146/non_2x/abstract-gradient-background-light-spring-color-perfect-for-design-wallpaper-promotion-presentation-website-banner-etc-illustration-background-vector.jpg'); 
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+
+#calculator {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s;
+    margin: 10% auto;
+}
+
+#calculator:hover {
+    background-color: #e8e7e7;
+}
+
+.month-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input, button {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.calculate-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.calculate-button:hover {
+    background-color: #45a049;
+}
+.calculate-button:active {
+    background-color: #3357c1;
+    border: 2px solid #f410c3; 
+}
+
+
+#result {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+        @media screen and (max-width: 600px) {
+            #calculator {
+                margin-top: 10%;
+                margin-left: 0%;
+                position: relative;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="calculator">
+    <h2>Бизнес Калкулатор</h2>
+
+    <div id="result"></div>
+
+    <div id="months"></div>
+
+    <button onclick="addNewMonthFields()">Добави нов месец</button>
+
+    <button class="calculate-button" onclick="calculateTax()">Изчисли данъка</button>
+    <button class="calculate-button" onclick="calculateProfit()">Изчисли печалбата</button>
+</div>
+
+<script>
+    var monthCount = 1;
+
+    function addNewMonthFields() {
+        var calculator = document.getElementById('calculator');
+        var monthsContainer = document.getElementById('months');
+
+        var monthContainer = document.createElement('div');
+        monthContainer.className = 'month-container';
+        monthContainer.id = 'month' + monthCount;
+
+        var newIncomeInput = document.createElement('input');
+        var newExpensesInput = document.createElement('input');
+
+        newIncomeInput.type = 'number';
+        newIncomeInput.placeholder = 'Приход за месец ' + monthCount;
+        newExpensesInput.type = 'number';
+        newExpensesInput.placeholder = 'Разход за месец ' + monthCount;
+
+        monthContainer.appendChild(newIncomeInput);
+        monthContainer.appendChild(newExpensesInput);
+
+        monthsContainer.appendChild(monthContainer);
+
+        monthCount++;
+    }
+
+    function calculateTax() {
+        calculate('tax');
+    }
+
+    function calculateProfit() {
+        calculate('profit');
+    }
+
+    function calculate(type) {
+        var monthsContainer = document.getElementById('months');
+        var resultContainer = document.getElementById('result');
+
+        var totalTax = 0;
+        var totalProfit = 0;
+
+        for (var i = 1; i <= monthCount - 1; i++) {
+            var monthIncome = parseFloat(document.getElementById('month' + i).getElementsByTagName('input')[0].value);
+            var monthExpenses = parseFloat(document.getElementById('month' + i).getElementsByTagName('input')[1].value);
+
+            if (!isNaN(monthIncome) && !isNaN(monthExpenses)) {
+                var tax = 0.2 * (monthIncome - monthExpenses);
+                var profit = monthIncome - monthExpenses - tax;
+
+                totalTax += tax;
+                totalProfit += profit;
+
+                if (type === 'tax') {
+                    resultContainer.innerHTML = 'Общ данък за всички месеци: ' + totalTax.toFixed(2);
+                } else if (type === 'profit') {
+                    resultContainer.innerHTML = 'Обща печалба за всички месеци: ' + totalProfit.toFixed(2);
+                }
+            } else {
+                alert('Моля, въведете валидни числови стойности за месец ' + i);
+                return;
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
