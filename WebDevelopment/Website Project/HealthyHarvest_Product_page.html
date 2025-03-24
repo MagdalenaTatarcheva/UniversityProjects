@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Healthy Harvest - Продукти</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header>
+    <h1 style="top: 1%; left: 40%;color: #495867;">Нашите продукти:</h1>
+    <div id="headlineDesign"></div>
+</header>
+
+<section>
+    <div class="gallery-container">
+        <div class="main-image">
+            <img src="https://detelina.com/wp-content/uploads/2017/06/apricot-kernels.jpg" alt="Снимка 1">
+            <div class="promotion-banner">ПРОМОЦИЯ</div>
+        </div>
+        <div class="thumbnails">
+            <img class="thumbnail" src="https://detelina.com/wp-content/uploads/2017/06/apricot-kernels.jpg" alt="Снимка 1">
+            <img class="thumbnail" src="https://img02.zdravnitza.com/3134/byala-kinoa-semena-zdravnitza-200-gr.jpg" alt="Снимка 2">
+            <img class="thumbnail" src="https://recepti.ezine.bg/files/1200x800/salata-plodove-kupa.webp" alt="Снимка 3">
+        </div>
+    </div>
+
+    <h2 style="top: 21%; left: 58%; font-weight: bold; color: #495867;">СУРОВИ КАЙСИЕВИ ЯДКИ, 100 гр. - 8,99 лв</h2>
+    <p style="top: 26%; left: 58%; font-style: italic;">
+        Счита се, че кайсиите и кайсиевите ядки са<br>
+        тайната на дълголетието на хималайското племе<br>
+        Хунза. С увеличената им консумация, те си доставят<br>
+        близо 20 пъти повече Витамин B17, отколкото<br>
+        съвременният човек на Запад. 
+    </p>
+
+    <h2 style="top: 47%; left: 58%; font-weight: bold; color: #495867;">БЯЛА КИНОА, СЕМЕНА, 200 гр. - 4,10 лв</h2>
+    <p style="top: 52%; left: 58%; font-style: italic;">
+        Специалистите препоръчват бяла киноа за<br>
+        консумация при хора с проблеми в<br>
+        храносмилането. Подходяща е за хора<br>
+        спазващи диети и вегани.
+    </p>
+
+    <h2 style="top: 71%; left: 58%; font-weight: bold; color: #495867;">ПЛОДОВА САЛАТА С КИВИ, 250 гр. - 4,30 лв</h2>
+    <p style="top: 76%; left: 58%; font-style: italic;"> 
+        Салатата съдържа: <br>
+        киви - 1 брой, нектарини - 1 брой, череши - няколко броя,<br>
+        ягоди - 3 - 4 броя, ананас - 1 - 2 шайби от консерва<br>
+        ябълка - 2 - 3 резена, вермут - 200 мл, лед - няколко кубчета<br>
+        лимонов сок - от 1/2 лимон, мед - 3 - 4 с.л., сметана - за гарниране.
+    </p>
+</section>
+
+<nav>
+    <menu>
+        <a style="top: 13%; left: 28%;" class="Menu" href="HealthyHarvest_Main_page.html">За фирмата</a>
+        <a style="top: 13%; left: 38%;" class="Menu" href="HealthyHarvest_Product_page.html">Продукти</a>
+        <a style="top: 13%; left: 48%;" class="Menu" href="HealthyHarvest_Orders_page.html">Поръчки</a>
+        <a style="top: 13%; left: 58%;" class="Menu" href="HealthyHarvest_Opinions_page.html">Мнения</a>
+        <a style="top: 13%; left: 68%;" class="Menu" href="Work_pageOne.html">Работа</a>
+    </menu>
+</nav>
+
+<script>
+    const mainImage = document.querySelector('.main-image img');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const promotionBanner = document.querySelector('.promotion-banner');
+
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', function() {
+            const imagePath = thumbnail.getAttribute('src');
+            mainImage.setAttribute('src', imagePath);
+
+            if (index === 1) {
+                promotionBanner.style.display = 'block';
+            } else {
+                promotionBanner.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

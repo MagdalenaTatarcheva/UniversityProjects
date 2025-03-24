@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Healthy Harvest - Партньори</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+
+<header>
+<h1 style="top: 1%; left: 37%; color: white;">Партньори на Healthy Harvest</h1>
+<div style="position: absolute; top: 0%; left: 22%; width: 1600px; height: 105px; background: #ce796b;" id="Dividers"></div>
+<div style="position: absolute; top: 12%; left: 0%; width: 420px; height: 950px; background: #E2F0CB;" id="Dividers"></div>
+</header>
+
+
+<article>
+
+<iframe width="420" height="345" style="position:absolute; top:25%; left:25%;"src="https://praktiker.bg/bg/?gclid=Cj0KCQjwhL6pBhDjARIsAGx8D58ol76lWXB1Jk4hFXK_e5moYJf-BkbRaJWxx2SDYgabNZIcmG1DozsaAqsJEALw_wcB"></iframe>
+<iframe width="420" height="345" style="position:absolute; top:25%; left:50%;"src="https://www.home-max.bg/"></iframe>
+<iframe width="420" height="345" style="position:absolute; top:25%; left:75%;"src="https://zadomaigradinata.bg/"></iframe>
+
+<p style="top:65%; left:25%; font-size: 150%; color: #495867;">
+Наш партньор - Практикер<br>
+ни осигурява висококачествени<br>
+строителни материали и<br>
+инструменти за успешното<br>
+изграждане на градински проекти.
+</p>
+
+<p style="top:65%; left:50%; font-size: 150%; color: #495867;">
+С Home-max споделяме страстта<br>
+към стилните и функционални<br>
+интериорни решения, които<br>
+обогатяват домовете на<br>
+нашите клиенти.
+</p>
+
+<p style="top:65%; left:75%; font-size: 150%; color: #495867;">
+Нашите приятели от<br>
+"За дома и градината" ни<br>
+предоставят вдъхновение и<br>
+инструменти за създаване на<br>
+прекрасни градини и<br>
+уютни домове.
+</p>
+</article>
+
+
+<nav>
+<menu>
+<a style="top: 13%; left: 28%;" class="Menu" href="HealthyHarvest_Main_page.html">За фирмата</a>
+<a style="top: 13%; left: 38%;" class="Menu" href="HealthyHarvest_Product_page.html">Продукти</a>
+<a style="top: 13%; left: 48%;" class="Menu" href="HealthyHarvest_Orders_page.html">Поръчки</a>
+<a style="top: 13%; left: 58%;" class="Menu" href="HealthyHarvest_Opinions_page.html">Мнения</a>
+<a style="top: 13%; left: 68%;" class="Menu" href="Work_pageOne.html">Работа</a>
+</menu>
+
+<div style="position: absolute; top: 35%; left: 5%; font-size: 22px;">
+	<label for="dropdown">Още за:</label>
+    <select id="dropdown" onchange="redirectToSelectedPage()">
+		<option value=""></option>
+        <option value="partners_page.html">Партньори</option>
+        <option value="development_page.html">Развитие</option>
+        <optgroup label="За собственика:">
+            <option value="movie_page.html">Филм</option>
+            <option value="music_page.html">Музика</option>
+        </optgroup>
+    </select>
+</div>
+</nav>
+
+
+<script>
+
+	function redirectToSelectedPage() {
+			var dropdown = document.getElementById('dropdown');
+			var selectedValue = dropdown.value;
+			if (selectedValue) {
+				window.location.href = selectedValue;
+			}
+	}
+	
+</script>
+
+
+</body>
+</html>

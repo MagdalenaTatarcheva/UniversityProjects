@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Healthy Harvest - Филм</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header>
+<h1 style="top: 1%; left: 48%; color: white;">Филм:</h1>
+<div style="position: absolute; top: 0%; left: 22%; width: 1600px; height: 105px; background: #ce796b;" id="Dividers"></div>
+<div style="position: absolute; top: 12%; left: 0%; width: 420px; height: 950px; background: #E2F0CB;" id="Dividers"></div>
+</header>
+
+
+<section>
+<video style="position: absolute; top: 30%; left: 30%; " id="myVideo" width="400" height="320" controls>
+   <source src="https://www.youtube.com/watch?v=sowGYbxTPgU" type="video/mp4">
+</video>
+
+<div style="position: absolute; top: 25%; left: 30%; ">
+<button onclick="changeVideoSize('+')">Увеличи</button>
+<button onclick="changeVideoSize('-')">Намали</button>
+</div>
+
+<script>
+function changeVideoSize(action) {
+    var video = document.getElementById('myVideo');
+    var currentWidth = video.clientWidth;
+	var currentheight = video.clientHeight;
+
+    if (action === '+') {
+        video.style.width = (currentWidth * 1.2) + 'px'; // 20%
+        video.style.height = (currentheight * 1.2) + 'px'; 
+    } else if (action === '-') {
+        video.style.width = (currentWidth / 1.2) + 'px'; 
+		video.style.height = (currentheight / 1.2) + 'px'; 
+    }
+}
+</script>
+</section>
+
+
+<nav>
+<menu>
+<a style="top: 13%; left: 28%;" class="Menu" href="HealthyHarvest_Main_page.html">За фирмата</a>
+<a style="top: 13%; left: 38%;" class="Menu" href="HealthyHarvest_Product_page.html">Продукти</a>
+<a style="top: 13%; left: 48%;" class="Menu" href="HealthyHarvest_Orders_page.html">Поръчки</a>
+<a style="top: 13%; left: 58%;" class="Menu" href="HealthyHarvest_Opinions_page.html">Мнения</a>
+<a style="top: 13%; left: 68%;" class="Menu" href="Work_pageOne.html">Работа</a>
+</menu>
+
+<div style="position: absolute; top: 35%; left: 5%; font-size: 22px;">
+    <label for="dropdown">Още за:</label>
+    <select id="dropdown" onchange="redirectToSelectedPage()">
+        <option value=""></option>
+        <option value="partners_page.html">Партньори</option>
+        <option value="development_page.html">Развитие</option>
+        <optgroup label="За собственика:">
+            <option value="movie_page.html">Филм</option>
+            <option value="music_page.html">Музика</option>
+        </optgroup>
+    </select>
+</div>
+</nav>
+
+
+<script>
+
+    function redirectToSelectedPage() {
+            var dropdown = document.getElementById('dropdown');
+            var selectedValue = dropdown.value;
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+    }
+    
+</script>
+
+
+</body>
+</html>

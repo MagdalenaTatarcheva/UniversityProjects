@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Healthy Harvest - Музика</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header>
+<h1 style="top: 1%; left: 47%; color: white;" >Музика:</h1>
+<div style="position: absolute; top: 0%; left: 22%; width: 1600px; height: 105px; background: #ce796b;" id="Dividers"></div>
+<div style="position: absolute; top: 12%; left: 0%; width: 420px; height: 950px; background: #E2F0CB;" id="Dividers"></div>
+</header>
+
+
+<section>
+<a style="position:absolute; top:89%; left:54.8%; font-size:25px; z-index:1;" href="https://www.youtube.com/watch?v=ZsXjCp_f1h4&list=PLTe75U0niE4j-4O3cvuhzrKsSHosM-Nov&index=33">Линк:</a>
+
+<iframe width="420" height="345" style="position:absolute; top:50%; left:46%;"src="https://www.youtube.com/watch?v=ZsXjCp_f1h4&list=PLTe75U0niE4j-4O3cvuhzrKsSHosM-Nov&index=33"></iframe>
+
+<p style="position:absolute; top:30%; left:50.8%; font-size:25px;">Моята любима песен:</p>
+<audio style="position:absolute; top:40%; left:49%;" controls src="playerhit.mp3">
+</section>
+
+
+<nav>
+<menu>
+<a style="top: 13%; left: 28%;" class="Menu" href="HealthyHarvest_Main_page.html">За фирмата</a>
+<a style="top: 13%; left: 38%;" class="Menu" href="HealthyHarvest_Product_page.html">Продукти</a>
+<a style="top: 13%; left: 48%;" class="Menu" href="HealthyHarvest_Orders_page.html">Поръчки</a>
+<a style="top: 13%; left: 58%;" class="Menu" href="HealthyHarvest_Opinions_page.html">Мнения</a>
+<a style="top: 13%; left: 68%;" class="Menu" href="Work_pageOne.html">Работа</a>
+</menu>
+
+<div style="position: absolute; top: 35%; left: 5%; font-size: 22px;">
+	<label for="dropdown">Още за:</label>
+    <select id="dropdown" onchange="redirectToSelectedPage()">
+		<option value=""></option>
+        <option value="partners_page.html">Партньори</option>
+        <option value="development_page.html">Развитие</option>
+        <optgroup label="За собственика:">
+            <option value="movie_page.html">Филм</option>
+            <option value="music_page.html">Музика</option>
+        </optgroup>
+    </select>
+</div>
+</nav>
+
+
+<script>
+
+	function redirectToSelectedPage() {
+			var dropdown = document.getElementById('dropdown');
+			var selectedValue = dropdown.value;
+			if (selectedValue) {
+				window.location.href = selectedValue;
+			}
+	}
+	
+</script>
+
+
+</body>
+</html>

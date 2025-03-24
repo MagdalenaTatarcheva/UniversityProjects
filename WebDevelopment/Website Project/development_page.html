@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Healthy Harvest - Развитие</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+
+<header>
+<h1 style="top: 1%; left: 29%; color: white;">Развитието на Healthy Harvest през годините:</h1>
+<div style="position: absolute; top: 0%; left: 22%; width: 1600px; height: 105px; background: #ce796b;" id="Dividers"></div>
+<div style="position: absolute; top: 12%; left: 0%; width: 420px; height: 950px; background: #E2F0CB;" id="Dividers"></div>
+</header>
+
+
+<article>
+<canvas style="position: absolute;top: 30%; left: 30%;background: #EEEEEE;" id="graphicCanvas" width="400" height="300"></canvas>
+<script>
+		  var canvas = document.getElementById('graphicCanvas');
+var line = canvas.getContext('2d');
+
+var startX = 20;
+var startY = 280;
+
+var controlX = 185;
+var controlY = 10;
+
+var endX = 350;
+var endY = 50;
+
+line.strokeStyle = 'green';
+
+line.lineWidth = 2;
+
+line.beginPath();
+line.moveTo(startX, startY); 
+line.quadraticCurveTo(controlX, controlY, endX, endY); 
+line.stroke(); 
+</script>
+<p style="top: 30%; left: 27%; font-size: 150%; color: #495867;">
+100%<br><br><br>
+70%<br><br><br>
+40%<br><br><br>
+20%
+</p>
+<p style="top: 60%; left: 30%; font-size: 150%;color: #495867;">
+2000 г.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2005 г.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2015 г.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2023 г.
+</p>
+</article>
+
+
+
+<nav>
+<menu>
+<a style="top: 13%; left: 28%;" class="Menu" href="HealthyHarvest_Main_page.html">За фирмата</a>
+<a style="top: 13%; left: 38%;" class="Menu" href="HealthyHarvest_Product_page.html">Продукти</a>
+<a style="top: 13%; left: 48%;" class="Menu" href="HealthyHarvest_Orders_page.html">Поръчки</a>
+<a style="top: 13%; left: 58%;" class="Menu" href="HealthyHarvest_Opinions_page.html">Мнения</a>
+<a style="top: 13%; left: 68%;" class="Menu" href="Work_pageOne.html">Работа</a>
+</menu>
+
+<div style="position: absolute; top: 35%; left: 5%; font-size: 22px;">
+	<label for="dropdown">Още за:</label>
+    <select id="dropdown" onchange="redirectToSelectedPage()">
+		<option value=""></option>
+        <option value="partners_page.html">Партньори</option>
+        <option value="development_page.html">Развитие</option>
+        <optgroup label="За собственика:">
+            <option value="movie_page.html">Филм</option>
+            <option value="music_page.html">Музика</option>
+        </optgroup>
+    </select>
+</div>
+</nav>
+
+
+<script>
+
+	function redirectToSelectedPage() {
+			var dropdown = document.getElementById('dropdown');
+			var selectedValue = dropdown.value;
+			if (selectedValue) {
+				window.location.href = selectedValue;
+			}
+	}
+	
+</script>
+
+
+</body>
+</html>
