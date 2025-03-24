@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Въпрос и отговор</title>
+
+    <style>
+        .shapes {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        body {
+            background-color: rgb(232, 245, 250);
+        }
+
+        #formBackground {
+            background-color: rgb(255, 255, 255);
+            border: 2px solid rgb(184, 183, 183);
+            position: absolute;
+            top: 0%; left: 25%;
+            width: 50%;
+            height: 250%;
+            z-index: -10;
+        }
+        #check-button{
+            position: absolute; 
+            top: 210%; left: 48%; 
+            height: 4%; width: 6%; 
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #game-container {
+            text-align: center;
+        }
+
+        #word-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 27%;
+            margin-left: 42%;
+        }
+
+        .word {
+            cursor: pointer;
+            user-select: none;
+            padding: 10px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        #sentence-container {
+            border: 2px dashed #ddd;
+            padding: 10px;
+            min-height: 50px; width: 13.5%;
+            margin-top: 1%; margin-bottom: 1%;
+            margin-left: 42%;
+
+        }
+        #formMainLabel{
+            background-color: #4caf50;
+            border: 2px solid #3d803f;
+            position: absolute;
+            top: 0%;
+            left: 25%;
+            width: 50%;
+            height: 35%;
+            z-index: -10;
+        }
+        #mainHeadline{
+            color: white; font-size: 50px; font-style: italic;
+            position: absolute;
+            top: 10%; left: 34%;
+            text-shadow: 4px 4px 4px #336034;
+        }
+        
+        #questionTwo{
+            position: absolute; 
+            top: 88%; left: 37%; 
+            font-size: 20px;
+        }
+
+        #app {
+            text-align: center;
+        }
+
+        .blank {
+            border-bottom: 1px solid black;
+            padding: 0 5px;
+            margin: 0 5px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-around;
+            height: 10%; width: 15%;
+            margin-top: 13%; margin-left: 38%;
+            justify-content: space-around;
+        }
+
+        .option {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .option:hover {
+            background-color: #f0f0f0;
+        }
+
+    </style>
+
+    <script>
+
+
+        //for first question
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.innerText);
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const data = event.dataTransfer.getData("text");
+            const wordElement = document.createElement("div");
+            wordElement.className = "word";
+            wordElement.innerText = data;
+            wordElement.draggable = true;
+            wordElement.addEventListener("dragstart", drag);
+            event.target.appendChild(wordElement);
+        }
+
+        window.onload = function() {
+            const wordContainer = document.getElementById("word-container");
+            for (let i = wordContainer.children.length; i >= 0; i--) {
+                wordContainer.appendChild(wordContainer.children[Math.random() * i | 0]);
+            }
+        };
+
+
+
+        // for second question
+        function dropSecondQuestion(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("text");
+        var dropTarget = event.target;
+    
+        if (dropTarget.classList.contains("blank")) {
+            dropTarget.textContent = data;
+            dropTarget.style.color = "";
+        }
+        }
+
+
+
+        //others
+        function validateForm() {
+            
+            var sentenceContainer = document.getElementById("sentence-container");
+            var blanks = document.querySelectorAll('.blank');
+            var circleCount = document.querySelector('input[name="circleCount"]:checked');
+            var numberAnswer = document.getElementById('answer').value;
+            var colorCheckboxes = document.querySelectorAll('input[name="answer[]"]:checked');
+            var multipleChoiceAnswer = document.getElementById('answer5').value;
+
+            // 1 question
+            if (sentenceContainer.children.length === 0) {
+            alert("Моля, подредете думите за въпрос 1.");
+            return false;
+            }
+
+            // 2 question
+           
+            var isSecondQuestionAnswered = Array.from(blanks).every(blank => blank.textContent.trim() !== '');
+             if (!isSecondQuestionAnswered) {
+                alert("Моля, попълнете празното поле с една от посочените думи за въпрос 2.");
+                return false;
+            }
+
+
+            // 3 question
+            if (!circleCount) {
+                alert("Моля, изберете броя на кръговете за въпрос 3.");
+                return false;
+            }
+
+            // 4 question
+            if (isNaN(numberAnswer) || numberAnswer < 1 || numberAnswer > 9) {
+                alert("Моля, въведете число между 1 и 9 за въпрос 4.");
+                return false;
+            }
+
+            // 5 question
+            if (multipleChoiceAnswer === "") {
+            alert("Моля, изберете отговор за въпрос 5.");
+             return false;
+            }
+
+            // 6 question
+            if (colorCheckboxes.length === 0) {
+                alert("Моля, изберете поне един цвят за въпрос 6.");
+                return false;
+            }
+
+            checkAnswers();
+            return true;
+        }
+
+        function checkAnswers() {
+
+
+    const sentenceContainer = document.getElementById("sentence-container");
+    const sentenceLabel = document.getElementById("sentenceLabel");
+    const words = sentenceContainer.querySelectorAll(".word");
+    const sentence = Array.from(words).map(word => word.innerText).join(' ');
+    const correctSentence = "Вадете лист и химикалка!";
+
+    var blanks = document.querySelectorAll('.blank');
+    const secondQuestionLabel = document.getElementById("secondQuestionLabel");
+    
+    
+    var circleCountValue = document.querySelector('input[name="circleCount"]:checked').value;
+    var numberAnswer = parseInt(document.getElementById('answer').value);
+    var multipleChoiceAnswer = document.getElementById('answer5').value;
+    var checkboxes = document.querySelectorAll('input[name="answer[]"]:checked');
+
+    var questionThree = document.getElementById('QuestionThree');
+    var numberQuestion = document.getElementById('numberQuestion');
+    var multipleChoiceQuestion = document.getElementById('multipleChoiceQuestion');
+    var warmColors = document.getElementById('warmColors');
+
+
+
+
+    // 1 question
+if (sentence === correctSentence) {
+        //green
+        sentenceContainer.style.color = 'green';
+        sentenceLabel.style.color = 'green';
+        var sentenceDiv = document.querySelector('.sentenceDiv');
+    if (sentenceDiv) {
+        sentenceDiv.remove();
+    }
+} else {
+        //red
+        sentenceContainer.style.color = 'red';
+        sentenceLabel.style.color = 'red';
+        var existingDiv = document.querySelector('.sentenceDiv');
+    if (!existingDiv) {
+        var sentenceDiv = document.createElement("div");
+        sentenceDiv.className = "sentenceDiv";
+        Object.assign(sentenceDiv.style, {
+            position: "absolute",
+            top: "73%",
+            left: "37%",
+            color: "red",
+            padding: "5px",
+            backgroundColor: "white",
+            borderRadius: "5px",
+        });
+        sentenceDiv.textContent = "Правилният отговор: Вадете лист и химикалка!";
+        document.body.appendChild(sentenceDiv);
+    }
+
+}
+
+
+// 2 question
+
+    
+        blanks.forEach(function (blank) {
+            if (blank.dataset.answer === blank.textContent) {
+                blank.style.color = "green";
+                secondQuestionLabel.style.color = 'green';
+                var correctWordDiv = document.querySelector('.correctWordDiv');
+                if (correctWordDiv) {
+                    correctWordDiv.remove();
+                }
+
+            } else {
+
+                blank.style.color = "red";
+                secondQuestionLabel.style.color = 'red';
+                var existingDiv = document.querySelector('.correctWordDiv');
+
+                if (!existingDiv) {
+                    var correctWordDiv = document.createElement("div");
+                    correctWordDiv.className = "correctWordDiv";
+                    Object.assign(correctWordDiv.style, {
+                    position: "absolute",
+                    top: "105%", left: "37%",
+                    color: "red",
+                    padding: "5px",
+                    backgroundColor: "white",
+                    borderRadius: "5px",
+                    });
+                correctWordDiv.textContent = "Правилният отговор: Париж";
+                document.body.appendChild(correctWordDiv);
+                }
+
+            }
+        });
+
+
+
+
+// 3 question
+    if (circleCountValue === "threeValue") {
+    QuestionThree.style.color = 'green';
+    var correctAnswerDivCircles = document.querySelector('.correctAnswerDivCircles');
+    if (correctAnswerDivCircles) {
+        correctAnswerDivCircles.remove();
+    }
+} else {
+    QuestionThree.style.color = 'red';
+    var existingDiv = document.querySelector('.correctAnswerDivCircles');
+    if (!existingDiv) {
+        var correctAnswerDivCircles = document.createElement("div");
+        correctAnswerDivCircles.className = "correctAnswerDivCircles";
+        Object.assign(correctAnswerDivCircles.style, {
+            position: "absolute",
+            top: "132%",
+            left: "37%",
+            color: "red",
+            padding: "5px",
+            backgroundColor: "white",
+            borderRadius: "5px",
+        });
+        correctAnswerDivCircles.textContent = "Правилният отговор: 3";
+        document.body.appendChild(correctAnswerDivCircles);
+    }
+}
+
+// 4 question
+    if(numberAnswer === 7){
+        numberQuestion.style.color = 'green';
+        var numberAnswerDiv = document.querySelector('.numberAnswerDiv');
+    if (numberAnswerDiv) {
+        numberAnswerDiv.remove();
+    }
+
+    }else{
+        numberQuestion.style.color = 'red';
+        var existingDiv = document.querySelector('.numberAnswerDiv');
+    if (!existingDiv) {
+        var numberAnswerDiv = document.createElement("div");
+        numberAnswerDiv.className = "numberAnswerDiv";
+        Object.assign(numberAnswerDiv.style, {
+            position: "absolute",
+            top: "152%",
+            left: "37%",
+            color: "red",
+            padding: "5px",
+            backgroundColor: "white",
+            borderRadius: "5px",
+        });
+        numberAnswerDiv.textContent = "Правилният отговор: 7";
+        document.body.appendChild(numberAnswerDiv);
+    }
+
+}
+    // 5 question
+    if(multipleChoiceAnswer === "2"){
+        multipleChoiceQuestion.style.color = 'green';
+        var multipleChoiceAnswerDiv = document.querySelector('.multipleChoiceAnswerDiv');
+    if (multipleChoiceAnswerDiv) {
+        multipleChoiceAnswerDiv.remove();
+    }
+
+    }else{
+        multipleChoiceQuestion.style.color = 'red';
+        var existingDiv = document.querySelector('.multipleChoiceAnswerDiv');
+    if (!existingDiv) {
+        var multipleChoiceAnswerDiv = document.createElement("div");
+        multipleChoiceAnswerDiv.className = "multipleChoiceAnswerDiv";
+        Object.assign(multipleChoiceAnswerDiv.style, {
+            position: "absolute",
+            top: "172%",
+            left: "37%",
+            color: "red",
+            padding: "5px",
+            backgroundColor: "white",
+            borderRadius: "5px",
+        });
+        multipleChoiceAnswerDiv.textContent = "Правилният отговор: 2";
+        document.body.appendChild(multipleChoiceAnswerDiv);
+    }
+
+    }
+
+    // 6 question
+    var redChecked = false;
+    var yellowChecked = false;
+    var greenChecked = false;
+    var blueChecked = false;
+
+    for (var i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].value === 'red') {
+        redChecked = true;
+    }
+    if (checkboxes[i].value === 'yellow') {
+        yellowChecked = true;
+    }
+    if (checkboxes[i].value === 'blue') {
+        blueChecked = true;
+    }
+    if (checkboxes[i].value === 'green') {
+        greenChecked = true;
+    }
+
+    if(redChecked && yellowChecked && !blueChecked && !greenChecked){
+        warmColors.style.color = 'green';
+        var redYellowSquareDiv = document.querySelector('.redYellowSquareDiv');
+    if (redYellowSquareDiv) {
+        redYellowSquareDiv.remove();
+    }
+
+    }else{
+        warmColors.style.color = 'red';
+        var existingDiv = document.querySelector('.redYellowSquareDiv');
+    if (!existingDiv) {
+        var redYellowSquareDiv = document.createElement("div");
+        redYellowSquareDiv.className = "redYellowSquareDiv";
+        Object.assign(redYellowSquareDiv.style, {
+            position: "absolute",
+            top: "195%",
+            left: "37%",
+            color: "red",
+            padding: "5px",
+            backgroundColor: "white",
+            borderRadius: "5px",
+        });
+        redYellowSquareDiv.textContent = "Правилният отговор: Червения и жълтия квадрат";
+        document.body.appendChild(redYellowSquareDiv);
+    }
+
+    }
+
+
+
+}
+
+
+}
+
+    </script>
+</head>
+<body>
+
+<div id="formBackground"></div>
+<div id="formMainLabel"></div>
+<h1 id="mainHeadline" >Тестови въпроси или задачи</h1>
+
+<form>
+
+    <!-- 1 question -->
+
+    <label id="sentenceLabel" for="game-container" style="position: absolute; top: 45%; left: 37%; font-weight: bold; font-size: 24px;">
+        1. Подредете правилно изречението:
+    </label>
+
+    <div id="game-container">
+        <div id="word-container">
+            <div class="word" draggable="true" ondragstart="drag(event)">Вадете</div>
+            <div class="word" draggable="true" ondragstart="drag(event)">лист</div>
+            <div class="word" draggable="true" ondragstart="drag(event)">и</div>
+            <div class="word" draggable="true" ondragstart="drag(event)">химикалка!</div>
+        </div>
+
+        <div id="sentence-container" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div>
+
+        <button id="check-button" onclick="checkSentence()">Провери</button>
+    </div>
+
+
+    <!--2 question-->
+
+
+    <label id="secondQuestionLabel" for="game-container" style="position: absolute; top: 80%; left: 37%; font-weight: bold; font-size: 24px;" for="app">
+        2. Довършете изречението:
+    </label>
+
+    <div id="app">
+        <p id="questionTwo">Столицата на Франция е <span class="blank" id="blank1" ondrop="dropSecondQuestion(event)" ondragover="allowDrop(event)" data-answer="Париж"></span>.</p>
+        <div class="options">
+            <div class="option" draggable="true" ondragstart="drag(event)">Берлин</div>
+            <div class="option" draggable="true" ondragstart="drag(event)">Мадрид</div>
+            <div class="option" draggable="true" ondragstart="drag(event)">Рим</div>
+            <div class="option" draggable="true" ondragstart="drag(event)">Париж</div>
+        </div>
+    </div>
+
+
+
+
+    <!-- 3 question -->
+
+    <svg width="300" height="400" style="position:absolute; top: 116%; left: 49%;">
+        <rect x="1.5" y="8" width="40" height="120" stroke="black" stroke-width="2" fill="black"/>
+        <circle cx="22" cy="40" r="10" stroke="black" stroke-width="2" fill="red"/>
+        <circle cx="22" cy="70" r="10" stroke="black" stroke-width="2" fill="yellow"/>
+        <circle cx="22" cy="100" r="10" stroke="black" stroke-width="2" fill="green"/>
+    </svg>
+
+
+    <div style="position: absolute; top: 110%; left: 37%;">
+        <p id="QuestionThree" style="font-size: 24px; font-weight: bold;">3. Колко кръга има в тази рисунка?</p>
+
+        <input type="radio" id="one" name="circleCount" value="oneValue">
+        <label for="one">1</label><br>
+        <input type="radio" id="two" name="circleCount" value="twoValue">
+        <label for="two">2</label><br>
+        <input type="radio" id="three" name="circleCount" value="threeValue">
+        <label for="three">3</label><br>
+    </div>
+
+
+
+    <!--4 question-->
+    <label style="position: absolute; top: 140%; left: 37%; font-weight: bold; font-size: 24px;" id="numberQuestion" for="answer">
+        4. Кое е най-популярното щастливо число между 1-9?
+    </label>
+    <input style="position: absolute; top: 145%; left: 37%;" type="number" id="answer" name="answer" required min="1" max="9">
+
+
+
+
+
+    <!--5 question-->
+    <label style="position: absolute; top: 160%; left: 37%; font-weight: bold; font-size: 24px;"
+           id="multipleChoiceQuestion" for="answer">
+        5. Кое от следните числа е просто число?
+    </label>
+    <select style="position: absolute; top: 165%; left: 37%;" id="answer5" name="answer5" required>
+        <option value="" disabled selected>Изберете отговор</option>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="10">10</option>
+    </select>
+
+
+
+
+
+    <!--6 question-->
+
+    <label id="warmColors" style="position: absolute; top: 180%; left: 37%; font-weight: bold; font-size: 24px;">
+        6. Кои от изброените цветове са топли?
+    </label>
+
+    <label style="position: absolute; top: 184%; left: 37%;">
+        <input type="checkbox" name="answer[]" value="red">
+    </label>
+    <label style="position: absolute; top: 184%; left: 42%;">
+        <input type="checkbox" name="answer[]" value="blue">
+    </label>
+    <label style="position: absolute; top: 184%; left: 47%;">
+        <input type="checkbox" name="answer[]" value="yellow">
+    </label>
+    <label style="position: absolute; top: 184%; left: 52%;">
+        <input type="checkbox" name="answer[]" value="green">
+    </label>
+
+    <img style="position: absolute; top: 187%; left: 37%; width: 40px; height: 40px;"
+         src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Solid_red.svg/2048px-Solid_red.svg.png">
+    <img style="position: absolute; top: 187%; left: 42%; width: 40px; height: 40px;"
+         src="https://colourlex.com/wp-content/uploads/2015/01/cobalt-blue-painted-swatch-F-1.jpg">
+    <img style="position: absolute; top: 187%; left: 47%; width: 40px; height: 40px;"
+         src="https://colourlex.com/wp-content/uploads/2021/02/naples-yellow-painted-swatch.jpg">
+    <img style="position: absolute; top: 187%; left: 52%; width: 40px; height: 40px;"
+         src="https://colourlex.com/wp-content/uploads/2021/02/Emerald-green-painted-swatch.jpg">
+
+         <button id="check-button" type="button" onclick="validateForm()">Предай</button>
+
+
+
+
+</form>
+
+</body>
+</html>
